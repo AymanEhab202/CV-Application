@@ -1,110 +1,151 @@
-function Information() {
-  const experiance = [];
+import { useState } from "react";
+import Experiance from "./Experiance";
+import { Input } from "@/components/base/input/input";
+import { Button } from "@/components/base/buttons/button";
+
+function CV_Form() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    schoolName: "",
+    study: "",
+    dateOfStudy: "",
+    companyName: "",
+    position: "",
+    mainResponsibilities: "",
+    dateFrom: "",
+    dateTo: "",
+  });
+  const [experiance, setExperiance] = useState([]);
+
+  const addExperiance = () => {
+    setExperiance([...experiance, formData]);
+    console.log(experiance);
+  };
   return (
     <>
       <div>
-        <form className="w-lg m-auto mt-8 text-center flex flex-col gap-2">
+        <form className="shadow-lg rounded-lg p-6 mb-6 w-lg m-auto mt-8 text-center flex flex-col gap-2">
           <div className="infromation flex flex-col  gap-2">
             <div className="flex items-center gap-2">
-              <label className="flex-none">Name: </label>
-              <input
-                type="text"
+              <Input
+                onChange={(e) => setFormData({ ...formData, name: e })}
+                isRequired
+                label="Name"
                 placeholder="Enter Your Name"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip kjdsn"
               />
             </div>
             <div className="flex items-center gap-2">
-              <label>Email: </label>
-              <input
-                type="email"
+              <Input
+                onChange={(e) => setFormData({ ...formData, email: e })}
+                isRequired
+                label="Email"
                 placeholder="Enter Your Email"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip"
               />
             </div>
             <div className="flex items-center gap-2">
-              <label>Phone Number: </label>
-              <input
-                type="number"
+              <Input
+                isRequired
+                label="Phone Number"
                 placeholder="Enter Your Phone Number"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip"
               />
             </div>
           </div>
           <div className="educational-experiance flex flex-col  gap-2">
             <div className="flex items-center gap-2">
-              <label>School Name: </label>
-              <input
-                type="text"
+              <Input
+                isRequired
+                label="School Name"
                 placeholder="Enter Your School Name"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip"
               />
             </div>
             <div className="flex items-center gap-2">
-              <label>Study: </label>
-              <input
-                type="text"
+              <Input
+                isRequired
+                label="Study"
                 placeholder="Enter Your Study Field"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip"
               />
             </div>
             <div className="flex items-center gap-2">
-              <label>Date of Study: </label>
-              <input
-                type="date"
+              <Input
+                isRequired
+                label="Date of Study"
                 placeholder="Enter Your Study ending date"
-                className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                tooltip="This is a tooltip"
+                type="date"
               />
             </div>
           </div>
           <div className="practical-experiance flex flex-col  gap-2">
             <div className="enter-data flex flex-col  gap-2">
               <div className="flex items-center gap-2">
-                <label>Company: </label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Company name"
-                  className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                <Input
+                  isRequired
+                  label="Company Name"
+                  placeholder="Enter Your Company Name"
+                  tooltip="This is a tooltip kjdsn"
                 />
               </div>
               <div className="flex items-center gap-2">
-                <label>Position: </label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Company name"
-                  className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                <Input
+                  isRequired
+                  label="Position"
+                  placeholder="Enter Your Position"
+                  tooltip="This is a tooltip kjdsn"
                 />
               </div>
               <div className="flex items-center gap-2">
-                <label>Main Resposiblities: </label>
-                <textarea
+                <Input
+                  isRequired
+                  label="Main Responsibilities"
                   placeholder="Enter Your Main Responsibilities"
-                  className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
+                  tooltip="This is a tooltip kjdsn"
+                  type="textarea"
                 />
               </div>
               <div className="flex items-center gap-1">
-                <label className="flex-0 text-nowrap">Date From: </label>
-                <input
+                <Input
+                  isRequired
+                  label="Date from: "
+                  tooltip="This is a tooltip kjdsn"
                   type="date"
-                  className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
                 />
-                <label className="flex-0 text-nowrap">Date to: </label>
-                <input
+                <Input
+                  isRequired
+                  label="Date to: "
+                  tooltip="This is a tooltip kjdsn"
                   type="date"
-                  className="flex-1 p-1 border-2 border-solid border-black rounded-sm"
                 />
               </div>
+              <Button
+                onClick={addExperiance}
+                type="submit"
+                color="secondary"
+                size="lg"
+              >
+                Add Experiance
+              </Button>
             </div>
             <div className="data-entered">
-              {experiance.map((ex) => {
-                <div>
-                  <h2>{ex.position}</h2>
-                  <h4>{ex.company}</h4>
-                  <p>{ex.resposiblities}</p>
-                  <p>
-                    From {ex.dateFrom} to {ex.dateTo}
-                  </p>
-                </div>;
-              })}
+              {experiance.length === 0 ? (
+                <p>No Experiance added yet.</p>
+              ) : (
+                experiance.map((ex) => {
+                  <Experiance
+                    company={ex.company}
+                    position={ex.position}
+                    mainResposibilities={ex.mainResposibilities}
+                    from={ex.from}
+                    to={ex.to}
+                  />;
+                })
+              )}
             </div>
           </div>
         </form>
@@ -113,4 +154,4 @@ function Information() {
   );
 }
 
-export default Information;
+export default CV_Form;
