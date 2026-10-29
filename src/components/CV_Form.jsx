@@ -1,154 +1,142 @@
 import { useState } from "react";
-import Experiance from "./Experiance";
 import { Input } from "@/components/base/input/input";
 import { Button } from "@/components/base/buttons/button";
+import InputExperience from "./InputExperiance";
+import CV_Response from "./CV_Response";
 
 function CV_Form() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    schoolName: "",
-    study: "",
-    dateOfStudy: "",
-    companyName: "",
-    position: "",
-    mainResponsibilities: "",
-    dateFrom: "",
-    dateTo: "",
-  });
+  const [formData, setFormData] = useState({});
   const [experiance, setExperiance] = useState([]);
 
-  const addExperiance = () => {
-    setExperiance([...experiance, formData]);
-    console.log(experiance);
-  };
+  function handleSubmit() {
+    if (
+      experiance.length > 0 &&
+      formData.name &&
+      formData.email &&
+      formData.phone &&
+      formData.schoolName &&
+      formData.study &&
+      formData.dateOfStudy
+    ) {
+      console.log("Form Data:", formData);
+      console.log("Experiance Data:", experiance);
+    } else {
+      alert(
+        "Please fill in all fields and add at least one experience before submitting.",
+      );
+    }
+  }
+
   return (
     <>
-      <div>
-        <form className="shadow-lg rounded-lg p-6 mb-6 w-lg m-auto mt-8 text-center flex flex-col gap-2">
-          <div className="infromation flex flex-col  gap-2">
-            <div className="flex items-center gap-2">
-              <Input
-                onChange={(e) => setFormData({ ...formData, name: e })}
-                isRequired
-                label="Name"
-                placeholder="Enter Your Name"
-                tooltip="This is a tooltip kjdsn"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                onChange={(e) => setFormData({ ...formData, email: e })}
-                isRequired
-                label="Email"
-                placeholder="Enter Your Email"
-                tooltip="This is a tooltip"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                isRequired
-                label="Phone Number"
-                placeholder="Enter Your Phone Number"
-                tooltip="This is a tooltip"
-              />
-            </div>
-          </div>
-          <div className="educational-experiance flex flex-col  gap-2">
-            <div className="flex items-center gap-2">
-              <Input
-                isRequired
-                label="School Name"
-                placeholder="Enter Your School Name"
-                tooltip="This is a tooltip"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                isRequired
-                label="Study"
-                placeholder="Enter Your Study Field"
-                tooltip="This is a tooltip"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                isRequired
-                label="Date of Study"
-                placeholder="Enter Your Study ending date"
-                tooltip="This is a tooltip"
-                type="date"
-              />
-            </div>
-          </div>
-          <div className="practical-experiance flex flex-col  gap-2">
-            <div className="enter-data flex flex-col  gap-2">
+      <div className="cv-form-container flex justify-between gap-4">
+        <div>
+          <form className="shadow-lg rounded-lg p-6 mb-6 w-lg m-auto mt-8 text-center flex flex-col gap-2">
+            <div className="infromation flex flex-col  gap-2">
               <div className="flex items-center gap-2">
                 <Input
                   isRequired
-                  label="Company Name"
-                  placeholder="Enter Your Company Name"
-                  tooltip="This is a tooltip kjdsn"
+                  onChange={(e) => setFormData({ ...formData, name: e })}
+                  value={formData.name}
+                  label="Name"
+                  placeholder="Enter Your Name"
+                  tooltip="This is a tooltip"
                 />
               </div>
               <div className="flex items-center gap-2">
                 <Input
                   isRequired
-                  label="Position"
-                  placeholder="Enter Your Position"
-                  tooltip="This is a tooltip kjdsn"
+                  onChange={(e) => setFormData({ ...formData, email: e })}
+                  value={formData.email}
+                  label="Email"
+                  placeholder="Enter Your Email"
+                  tooltip="This is a tooltip"
                 />
               </div>
               <div className="flex items-center gap-2">
                 <Input
                   isRequired
-                  label="Main Responsibilities"
-                  placeholder="Enter Your Main Responsibilities"
-                  tooltip="This is a tooltip kjdsn"
-                  type="textarea"
+                  onChange={(e) => setFormData({ ...formData, phone: e })}
+                  value={formData.phone}
+                  label="Phone Number"
+                  placeholder="Enter Your Phone Number"
+                  tooltip="This is a tooltip"
                 />
               </div>
-              <div className="flex items-center gap-1">
+            </div>
+            <div className="educational-experiance flex flex-col  gap-2">
+              <div className="flex items-center gap-2">
                 <Input
                   isRequired
-                  label="Date from: "
-                  tooltip="This is a tooltip kjdsn"
-                  type="date"
+                  onChange={(e) => setFormData({ ...formData, schoolName: e })}
+                  value={formData.schoolName}
+                  label="School Name"
+                  placeholder="Enter Your School Name"
+                  tooltip="This is a tooltip"
                 />
+              </div>
+              <div className="flex items-center gap-2">
                 <Input
                   isRequired
-                  label="Date to: "
-                  tooltip="This is a tooltip kjdsn"
+                  onChange={(e) => setFormData({ ...formData, study: e })}
+                  value={formData.study}
+                  label="Study"
+                  placeholder="Enter Your Study Field"
+                  tooltip="This is a tooltip"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Input
+                  isRequired
+                  onChange={(e) => setFormData({ ...formData, dateOfStudy: e })}
+                  value={formData.dateOfStudy}
+                  label="Date of Study"
+                  placeholder="Enter Your Study ending date"
+                  tooltip="This is a tooltip"
                   type="date"
                 />
               </div>
-              <Button
-                onClick={addExperiance}
-                type="submit"
-                color="secondary"
-                size="lg"
-              >
-                Add Experiance
-              </Button>
             </div>
-            <div className="data-entered">
-              {experiance.length === 0 ? (
-                <p>No Experiance added yet.</p>
-              ) : (
-                experiance.map((ex) => {
-                  <Experiance
-                    company={ex.company}
-                    position={ex.position}
-                    mainResposibilities={ex.mainResposibilities}
-                    from={ex.from}
-                    to={ex.to}
-                  />;
-                })
-              )}
+            <div className="practical-experiance flex flex-col  gap-2">
+              <InputExperience setExperiance={setExperiance} />
+              <div className="data-entered">
+                {experiance.length > 0 &&
+                  experiance.map((exp, index) => (
+                    <div
+                      key={index}
+                      className="border p-2 rounded-lg text-left mb-2 relative"
+                    >
+                      <div
+                        className="delete-btn primary-destructive"
+                        onClick={() =>
+                          setExperiance(
+                            experiance.filter((_, i) => i !== index),
+                          )
+                        }
+                      >
+                        Delete
+                      </div>
+                      <h2 className="text-lg font-bold">{exp.position}</h2>
+                      <p className="text-md font-semibold">{exp.companyName}</p>
+                      <p className="text-sm text-gray-500">
+                        {exp.dateFrom} to {exp.dateTo}
+                      </p>
+                      <p>{exp.mainResponsibilities}</p>
+                    </div>
+                  ))}
+              </div>
             </div>
-          </div>
-        </form>
+            <Button
+              color="primary"
+              size="lg"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+        <CV_Response response={formData} experiences={experiance} />
       </div>
     </>
   );
