@@ -1,6 +1,14 @@
-export default function CV_Response({ response, experiences }) {
+import { Button } from "@/components/base/buttons/button";
+export default function CV_Response({ response, experiences, editResponse }) {
   return (
-    <div className="shadow-lg rounded-lg p-6 mb-6 w-lg m-auto mt-8 text-center flex flex-col gap-2">
+    <div className="shadow-lg relative rounded-lg p-6 mb-6 w-lg m-auto mt-8 text-center flex flex-col gap-2">
+      <Button
+        className="absolute top-10 right-10"
+        type="secondary"
+        onClick={editResponse}
+      >
+        Edit
+      </Button>
       <h2>CV Response </h2>
       <p>
         <strong>Name:</strong> {response.name}

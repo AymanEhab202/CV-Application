@@ -6,7 +6,28 @@ import CV_Response from "./CV_Response";
 
 function CV_Form() {
   const [formData, setFormData] = useState({});
+  const [response, setResponse] = useState({});
   const [experiance, setExperiance] = useState([]);
+
+  function editResponse() {
+    if (
+      experiance.length > 0 &&
+      formData.name &&
+      formData.email &&
+      formData.phone &&
+      formData.schoolName &&
+      formData.study &&
+      formData.dateOfStudy
+    ) {
+      setFormData(response);
+      setExperiance(response.experiance || []);
+      console.log(response);
+    } else {
+      alert(
+        "Please fill in all fields and add at least one experience before submitting.",
+      );
+    }
+  }
 
   function handleSubmit() {
     if (
@@ -18,6 +39,7 @@ function CV_Form() {
       formData.study &&
       formData.dateOfStudy
     ) {
+      setResponse({ ...formData, experiance: experiance });
       console.log("Form Data:", formData);
       console.log("Experiance Data:", experiance);
     } else {
@@ -136,7 +158,11 @@ function CV_Form() {
             </Button>
           </form>
         </div>
-        <CV_Response response={formData} experiences={experiance} />
+        <CV_Response
+          response={response}
+          experiences={response.experiance}
+          editResponse={editResponse}
+        />
       </div>
     </>
   );
